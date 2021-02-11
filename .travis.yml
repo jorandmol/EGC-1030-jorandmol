@@ -16,9 +16,18 @@ install:
   - pip install codacy-coverage
 script:
   - cd decide
+  - cp local_settings.travis.py local_settings.py
   - coverage run --branch --source=. ./manage.py test --keepdb
   - coverage xml
   - python-codacy-coverage -r coverage.xml
 branches:
   only:
     - master 
+deploy:
+  provider: heroku
+  app: egc-1030-jorandmol
+  strategy: git
+  api_key: 
+    secure: pxEffGrMmsx9Tkr0SLJ5Pd22K/iTe4RST2icZZiVNKtoF4r7rqkVQwnnxUrxuLUyIvUvKBd+mRNK3uS74Zc5GSFHVEoCvDWyFrYzwDh2I6b8BXGzRIJhFLDGTGOQTYMxKNBfOEgHTDyZiXoHQPrCr2HxpVGFwAJapvBDbT+EbsGuPKJrCUKtvK5kr8VSrtvkFgaxe2amdXa/6lkO99rvBJxw3iAYn+6eKBOiFlIILeFx6oe6iBSpK1q8YFtwA4ufNMWBIhK5mSqSM3MB/OG+oA+Z3YP+OhIgAtl0h+TwWlRrlLXprK/ZvmmNatnejROXRr/VWj9mWmVG/bslQeVIWFqmOPFfnvbBJ4R8GIIES4nJ2972wnGxYDaH2yNUOZZ42gnzz2zaDgQ77vnE500MQxKNMgOstiFVerPXdk1q+lKK7KjWoJzs1LC4wBWjRU/sU1ZvGNh6Y1hEcMkWH84EVhGVMvKDtgWwDxKXFPNZTStzhYoFobC8nAgO7p7ZejuwT7Z3WG1EVUcWyUkmZMngx03ryvMDatYje3NhbO0Bt4QcExvGx0Pf5GpOTbIy6jjLN0smoboWM13WzFPyYDUfRYu0hS+IEfQ4wbJ9iYfSAVYF81S7enhRKIOpVpij9cKJWYLeZ/vC/hjx4Ejyam2yjETIKToSuaf/TyENqsPrtN0=
+  on:
+    branch: master
